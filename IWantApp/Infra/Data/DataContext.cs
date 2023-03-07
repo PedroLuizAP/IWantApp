@@ -1,4 +1,5 @@
-﻿using IWantApp.Domain.Products;
+﻿using Flunt.Notifications;
+using IWantApp.Domain.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -12,6 +13,8 @@ namespace IWantApp.Infra.Data
         public DataContext(DbContextOptions options) : base(options) { }
         protected override void OnModelCreating (ModelBuilder builder)
         {
+            builder.Ignore<Notification>();
+
             builder.Entity<Product>().Property(p => p.Description).HasMaxLength(255);
             builder.Entity<Product>().Property(p => p.Name).HasMaxLength(120).IsRequired();
             builder.Entity<Category>().Property(p => p.Name).HasMaxLength(20).IsRequired();
