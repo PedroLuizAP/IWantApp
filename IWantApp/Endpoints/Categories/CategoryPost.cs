@@ -12,13 +12,7 @@ namespace IWantApp.Endpoints.Categories
 
         public static IResult Action(CategoryRequest  categoryRequest, DataContext context)
         {
-            var category = new Category(categoryRequest.Name)
-            {
-                CreatedBy = "Debug",
-                EditedBy = "",
-                EditedOn = DateTime.Now,
-                CreatedOn = DateTime.Now,
-            };
+            var category = new Category(categoryRequest.Name, "test", "test");
 
             if (!category.IsValid) return Results.BadRequest(category.Notifications);
 
