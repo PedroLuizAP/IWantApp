@@ -15,8 +15,10 @@ namespace IWantApp.Endpoints.Categories
         {
             var category = context.Category.Where(c => c.Id == id).FirstOrDefault();
 
-            category.Active = categoryRequest.Active;
-            category.Name = categoryRequest.Name;
+            if (category == null) Results.NotFound();
+
+            category!.Active = categoryRequest.Active;
+            category!.Name = categoryRequest.Name;
 
             context.Category.Update(category);
             context.SaveChanges();
