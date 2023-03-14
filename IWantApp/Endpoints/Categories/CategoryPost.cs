@@ -14,8 +14,12 @@ namespace IWantApp.Endpoints.Categories
         {
             var category = new Category(categoryRequest.Name, "test", "test");
 
-            if (!category.IsValid) return Results.BadRequest(category.Notifications);
+            if (!category.IsValid)
+            {
+                var errors = category.Notifications.GroupBy(g => g.Key).ToDictionary(d => d.Key, d=> d.Select(x => x.Message).ToArray());
 
+                return Results.ValidationProblem(errors);
+            }
             context.Category.Add(category);
             context.SaveChanges();
 
