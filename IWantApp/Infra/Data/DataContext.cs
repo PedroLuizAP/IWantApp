@@ -1,17 +1,18 @@
 ﻿using Flunt.Notifications;
 using IWantApp.Domain.Products;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace IWantApp.Infra.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Category { get; set; }
 
         public DataContext(DbContextOptions options) : base(options) { }
-        protected override void OnModelCreating (ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Ignore<Notification>();
 
