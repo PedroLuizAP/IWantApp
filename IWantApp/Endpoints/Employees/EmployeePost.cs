@@ -16,7 +16,7 @@ namespace IWantApp.Endpoints.Employees
 
             var result = userManager.CreateAsync(user, employeeRequest.Password).Result;
 
-            if (!result.Succeeded) return Results.BadRequest(result.Errors.First());
+            if (!result.Succeeded) return Results.ValidationProblem(result.Errors.ConvertToProblemDetails());
 
             var userClaims = new List<Claim>
             {
