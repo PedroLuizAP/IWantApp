@@ -9,9 +9,12 @@ namespace IWantApp.Endpoints
         public static Dictionary<string, string[]> ConvertToProblemDetails(this IReadOnlyCollection<Notification> notification) => notification.GroupBy(g => g.Key).ToDictionary(d => d.Key, d => d.Select(x => x.Message).ToArray());
         public static Dictionary<string, string[]> ConvertToProblemDetails(this IEnumerable<IdentityError> errors)
         {
-            var dictionary = new Dictionary<string, string[]>();
-            dictionary.Add("Error", errors.Select(e => e.Description).ToArray());
-            return errors.GroupBy(e => e.Code).ToDictionary(d => d.Key, d => d.Select(x => x.Description).ToArray());
+            var dictionary = new Dictionary<string, string[]>
+            {
+                { "Error", errors.Select(e => e.Description).ToArray() }
+            };
+
+            return dictionary;
         }
     }
 }
