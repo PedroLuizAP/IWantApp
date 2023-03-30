@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Dapper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 
 namespace IWantApp.Endpoints.Employees
 {
@@ -9,24 +11,13 @@ namespace IWantApp.Endpoints.Employees
 
         public static Delegate Handle => Action;
 
-        public static IResult Action(int page, int rows, UserManager<IdentityUser> userManager)
+        public static IResult Action(int page, int rows, IConfiguration configuration)
         {
-            var users = userManager.Users.Skip((page - 1) * rows).Take(rows).ToList();
+            var db = new SqlConnection(configuration["ConnectionString:IWantDb"]);
 
-            var employees = new List<EmployeeResponse>();
+            //var employees = db.Query<>()
 
-            foreach(var user in users)
-            {
-                var claims = userManager.GetClaimsAsync(user).Result;
-
-                var claimName = claims.FirstOrDefault(c => c.Type == "Name");
-
-                var userName = claimName != null ? claimName.Value : string.Empty;
-
-                employees.Add(new EmployeeResponse(user.Email, userName));
-            }
-
-            return Results.Ok(employees);
+            return Results.Ok();
         }
     }
 }
