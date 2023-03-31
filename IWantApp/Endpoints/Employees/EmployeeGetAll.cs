@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 
 namespace IWantApp.Endpoints.Employees
@@ -11,13 +10,19 @@ namespace IWantApp.Endpoints.Employees
 
         public static Delegate Handle => Action;
 
-        public static IResult Action(int page, int rows, IConfiguration configuration)
+        public static IResult Action(int? page, int? rows, IConfiguration configuration)
         {
+            if (page > 10) return Results.BadRequest("Maximum limit of 10 rows.");
+
             var db = new SqlConnection(configuration["ConnectionString:IWantDb"]);
 
-            //var employees = db.Query<>()
+            var queryString = "SELECT Email, ClaimValue as Name FROM AspNetUsers u INNER JOIN AspNetUserClaims c ON u.Id = c.UserId AND claimtype = 'Name' ORDER BY name";
 
-            return Results.Ok();
+            if (page != null && rows != null) queryString += " OFFSET (@page - 1) * @rows ROWS FETCH NEXT @rows ROWS ONLY";
+
+            var employees = db.Query<EmployeeResponse>(queryString, new { page, rows });
+
+            return Results.Ok(employees);
         }
     }
 }
