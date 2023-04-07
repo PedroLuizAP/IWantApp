@@ -13,7 +13,7 @@ namespace IWantApp.Endpoints.Security
 
         public static Delegate Handle => Action;
 
-        public static IResult Action(LoginRequest loginRequest, UserManager<IdentityUser> userManager)
+        public static IResult Action(LoginRequest loginRequest, UserManager<IdentityUser> userManager, IConfiguration configuration)
         {
             var user = userManager.FindByEmailAsync(loginRequest.Email).Result;
 
@@ -28,9 +28,9 @@ namespace IWantApp.Endpoints.Security
                     new Claim(ClaimTypes.Email, loginRequest.Email)
                 }),
                 Expires = DateTime.UtcNow.AddDays(1),
-                Issuer = "Issuer",
-                Audience = "IWantApp",
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes("A@fderwfQQSDXCCer34")), SecurityAlgorithms.HmacSha256Signature)//simulate key
+                Issuer = configuration["JwtBearerTokenSettings:Issuer"],
+                Audience = configuration["JwtBearerTokenSettings:Audience"],
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration["JwtBearerTokenSettings:SecretKey"]!)), SecurityAlgorithms.HmacSha256Signature)//simulate key
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
