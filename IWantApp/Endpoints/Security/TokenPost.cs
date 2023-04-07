@@ -30,7 +30,7 @@ namespace IWantApp.Endpoints.Security
                 Expires = DateTime.UtcNow.AddDays(1),
                 Issuer = "Issuer",
                 Audience = "IWantApp",
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("C35tl4DCwM")), SecurityAlgorithms.HmacSha256Signature)//simulate key
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes("A@fderwfQQSDXCCer34")), SecurityAlgorithms.HmacSha256Signature)//simulate key
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
