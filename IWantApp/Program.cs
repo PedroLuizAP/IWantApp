@@ -3,6 +3,7 @@ using IWantApp.Endpoints.Employees;
 using IWantApp.Endpoints.Security;
 using IWantApp.Infra.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -26,8 +27,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkSto
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("Admin", policy => policy.RequireClaim("Admin"));
-    options.AddPolicy("User", policy => policy.RequireClaim("User"));
+    options.FallbackPolicy = new AuthorizationPolicyBuilder().AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser().Build();
 });
 
 builder.Services.AddAuthentication(x =>
