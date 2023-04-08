@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -12,7 +13,7 @@ namespace IWantApp.Endpoints.Security
         public static string[] Methods => new string[] { HttpMethod.Post.ToString() };
 
         public static Delegate Handle => Action;
-
+        [AllowAnonymous]
         public static IResult Action(LoginRequest loginRequest, UserManager<IdentityUser> userManager, IConfiguration configuration)
         {
             var user = userManager.FindByEmailAsync(loginRequest.Email).Result;
