@@ -26,7 +26,8 @@ namespace IWantApp.Endpoints.Security
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Email, loginRequest.Email)
+                    new Claim(ClaimTypes.Email, loginRequest.Email),
+                    new Claim("EmployeeCode", "1"),
                 }),
                 Expires = DateTime.UtcNow.AddDays(1),
                 Issuer = configuration["JwtBearerTokenSettings:Issuer"],
