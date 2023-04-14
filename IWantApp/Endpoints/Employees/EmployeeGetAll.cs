@@ -11,7 +11,7 @@ namespace IWantApp.Endpoints.Employees
         public static string[] Methods => new string[] { HttpMethod.Get.ToString() };
 
         public static Delegate Handle => Action;
-        [Authorize(Policy = "EmployeePolicy")]
+        [Authorize(Policy = "Employee005Policy")]
         public static IResult Action(int? page, int? rows, QueryAllUsersWithClaimName query)
         {
             if (page > 10) return Results.BadRequest("Maximum limit of 10 rows.");

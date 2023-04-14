@@ -22,13 +22,19 @@ namespace IWantApp.Endpoints.Security
 
             if (!userManager.CheckPasswordAsync(user, loginRequest.Password).Result) return Results.BadRequest();
 
+            var subject = new ClaimsIdentity(new Claim[]
+            {
+                new Claim(ClaimTypes.Email, loginRequest.Email),
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+            });
+
+            var claims = userManager.GetClaimsAsync(user).Result;
+
+            subject.AddClaims(claims);
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Email, loginRequest.Email),
-                    new Claim("EmployeeCode", "1"),
-                }),
+                Subject = subject,
                 Expires = DateTime.UtcNow.AddDays(1),
                 Issuer = configuration["JwtBearerTokenSettings:Issuer"],
                 Audience = configuration["JwtBearerTokenSettings:Audience"],
