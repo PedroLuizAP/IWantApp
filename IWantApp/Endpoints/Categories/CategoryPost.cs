@@ -12,7 +12,7 @@ namespace IWantApp.Endpoints.Categories
         public static Delegate Handle => Action;
 
         [Authorize(Policy = "EmplyeePolicy")]
-        public static IResult Action(CategoryRequest categoryRequest, HttpContext http, DataContext context)
+        public static async Task<IResult> Action(CategoryRequest categoryRequest, HttpContext http, DataContext context)
         {
             var userId = http.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
 
@@ -20,9 +20,9 @@ namespace IWantApp.Endpoints.Categories
 
             if (!category.IsValid) return Results.ValidationProblem(category.Notifications.ConvertToProblemDetails());
 
-            context.Category.Add(category);
+            await context.Category.AddAsync(category);
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             return Results.Created($"/categories/{category.Id}", category.Id);
         }
