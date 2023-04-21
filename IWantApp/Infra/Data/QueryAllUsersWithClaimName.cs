@@ -13,7 +13,7 @@ namespace IWantApp.Infra.Data
             _configuration = configuration;
         }
 
-        public IEnumerable<EmployeeResponse> Execute(int? page , int? rows)
+        public async Task<IEnumerable<EmployeeResponse>> Execute(int? page , int? rows)
         {
             var db = new SqlConnection(_configuration["ConnectionString:IWantDb"]);
 
@@ -21,7 +21,7 @@ namespace IWantApp.Infra.Data
 
             if (page != null && rows != null) queryString += " OFFSET (@page - 1) * @rows ROWS FETCH NEXT @rows ROWS ONLY";
 
-            return db.Query<EmployeeResponse>(queryString, new { page, rows });
+            return await db.QueryAsync<EmployeeResponse>(queryString, new { page, rows });
         }
     }
 }
