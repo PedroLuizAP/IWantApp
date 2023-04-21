@@ -12,11 +12,11 @@ namespace IWantApp.Endpoints.Employees
 
         public static Delegate Handle => Action;
         [Authorize(Policy = "Employee005Policy")]
-        public static IResult Action(int? page, int? rows, QueryAllUsersWithClaimName query)
+        public static async Task<IResult> Action(int? page, int? rows, QueryAllUsersWithClaimName query)
         {
             if (page > 10) return Results.BadRequest("Maximum limit of 10 rows.");
 
-            return Results.Ok(query.Execute(page, rows));
+            return Results.Ok(await query.Execute(page, rows));
         }
     }
 }
