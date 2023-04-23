@@ -14,7 +14,7 @@ namespace IWantApp.Endpoints.Categories
         {
             var categories = context.Category.ToList();
 
-            var response = categories.Select(c => new CategoryResponse { Id = c.Id, Active = c.Active, Name = c.Name });
+            var response = categories.Select(c => new CategoryResponse(c.Id, c.Name, c.Active));
 
             return Results.Ok(response);
         }
