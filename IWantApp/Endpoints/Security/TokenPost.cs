@@ -14,13 +14,13 @@ namespace IWantApp.Endpoints.Security
 
         public static Delegate Handle => Action;
         [AllowAnonymous]
-        public static IResult Action(LoginRequest loginRequest, UserManager<IdentityUser> userManager, IConfiguration configuration)
+        public static async Task<IResult> Action(LoginRequest loginRequest, UserManager<IdentityUser> userManager, IConfiguration configuration)
         {
-            var user = userManager.FindByEmailAsync(loginRequest.Email).Result;
+            var user = await userManager.FindByEmailAsync(loginRequest.Email);
 
             if (user == null) return Results.BadRequest();
 
-            if (!userManager.CheckPasswordAsync(user, loginRequest.Password).Result) return Results.BadRequest();
+            if (!await userManager.CheckPasswordAsync(user, loginRequest.Password)) return Results.BadRequest();
 
             var subject = new ClaimsIdentity(new Claim[]
             {
@@ -28,7 +28,7 @@ namespace IWantApp.Endpoints.Security
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
             });
 
-            var claims = userManager.GetClaimsAsync(user).Result;
+            var claims = await userManager.GetClaimsAsync(user);
 
             subject.AddClaims(claims);
 
