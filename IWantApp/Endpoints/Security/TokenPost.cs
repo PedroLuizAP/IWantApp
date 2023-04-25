@@ -14,8 +14,10 @@ namespace IWantApp.Endpoints.Security
 
         public static Delegate Handle => Action;
         [AllowAnonymous]
-        public static async Task<IResult> Action(LoginRequest loginRequest, UserManager<IdentityUser> userManager, IConfiguration configuration)
+        public static async Task<IResult> Action(LoginRequest loginRequest, UserManager<IdentityUser> userManager, IConfiguration configuration, ILogger<TokenPost> log)
         {
+            log.LogInformation("Getting token");
+
             var user = await userManager.FindByEmailAsync(loginRequest.Email);
 
             if (user == null) return Results.BadRequest();
