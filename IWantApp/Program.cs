@@ -7,11 +7,26 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
+using Serilog.Sinks.MSSqlServer;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//builder.WebHost.UseSerilog((context, configuration) =>
+builder.Host.UseSerilog((context, configuration) =>
+{
+    configuration.WriteTo.Console().WriteTo.MSSqlServer(
+        context.Configuration["ConnectionString:IWantDb"],
+        sinkOptions: new MSSqlServerSinkOptions()
+        {
+            AutoCreateSqlDatabase = true,
+            TableName = "LogAPI",
+        });
+});
+
 builder.Services.AddSqlServer<DataContext>(builder.Configuration["ConnectionString:IWantDb"]);
+
 #if DEBUG
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
