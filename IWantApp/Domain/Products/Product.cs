@@ -22,6 +22,8 @@ namespace IWantApp.Domain.Products
 
             CreatedOn = DateTime.Now;
             EditedOn = DateTime.Now;
+
+            Validate()
         }
 
         private void Validate()
@@ -30,7 +32,7 @@ namespace IWantApp.Domain.Products
                 .IsNotNullOrEmpty(Name, "Name")
                 .IsGreaterOrEqualsThan(Name, 3, "Name")
                 .IsNotNullOrEmpty(Description, "Description")
-                .IsNotNull(Category, "Category")
+                .IsNotNull(Category, "Category", "Category not Found")
                 .IsGreaterOrEqualsThan(Description, 3 , "Description")
                 .IsNotNullOrEmpty(CreatedBy, "CreatedBy")
                 .IsNotNullOrEmpty(EditedBy, "EditedBy");
