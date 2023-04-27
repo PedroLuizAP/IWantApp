@@ -107,7 +107,14 @@ app.Map("/error", (HttpContext http) =>
 
     if (error != null)
     {
-        if (error is SqlException) return Results.Problem(title: "Database out", statusCode: 500);
+        switch (error)
+        {
+            case SqlException:
+                return Results.Problem(title: "Database out", statusCode: 500);
+
+            case BadHttpRequestException:
+                return Results.Problem(title: "Invalid format", statusCode: 500);
+        }
     }
 
     return Results.Problem(title: "An error occurred.", statusCode: 500);
