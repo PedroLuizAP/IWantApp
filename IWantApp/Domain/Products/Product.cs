@@ -10,20 +10,23 @@ namespace IWantApp.Domain.Products
         public Category Category { get; set; }
         public long CategoryId { get; set; }
         public bool Active { get; set; } = true;
+        public decimal Price { get; private set; }
 
-        public Product(string name, Category category, string description, bool hasStock, string createdBy)
+        public Product() { }
+        public Product(string name, Category category, string description, bool hasStock, string createdBy, decimal price)
         {
             Name = name;
             Category = category;
             Description = description;
             HasStock = hasStock;
+            Price = price;
             CreatedBy = createdBy;
             EditedBy = createdBy;
 
             CreatedOn = DateTime.Now;
             EditedOn = DateTime.Now;
 
-            Validate()
+            Validate();
         }
 
         private void Validate()
@@ -33,9 +36,10 @@ namespace IWantApp.Domain.Products
                 .IsGreaterOrEqualsThan(Name, 3, "Name")
                 .IsNotNullOrEmpty(Description, "Description")
                 .IsNotNull(Category, "Category", "Category not Found")
-                .IsGreaterOrEqualsThan(Description, 3 , "Description")
+                .IsGreaterOrEqualsThan(Description, 3, "Description")
                 .IsNotNullOrEmpty(CreatedBy, "CreatedBy")
-                .IsNotNullOrEmpty(EditedBy, "EditedBy");
+                .IsNotNullOrEmpty(EditedBy, "EditedBy")
+                .IsGreaterOrEqualsThan(Price, 1, "Price");
 
             AddNotifications(contract);
         }

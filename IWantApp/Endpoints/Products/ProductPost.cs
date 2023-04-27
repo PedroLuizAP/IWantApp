@@ -20,7 +20,7 @@ namespace IWantApp.Endpoints.Products
 
             var category = await context.Category.FirstOrDefaultAsync(c => c.Id == productRequest.CategoryId);
         
-            var product = new Product(productRequest.Name, category, productRequest.Description, productRequest.HasStock, userId);
+            var product = new Product(productRequest.Name, category, productRequest.Description, productRequest.HasStock, userId, productRequest.Price);
         
             if(!product.IsValid) return Results.ValidationProblem(product.Notifications.ConvertToProblemDetails());
 
