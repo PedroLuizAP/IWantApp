@@ -37,7 +37,11 @@ namespace IWantApp.Endpoints.Security
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = subject,
+#if DEBUG
+                Expires = DateTime.UtcNow.AddYears(1),
+#else 
                 Expires = DateTime.UtcNow.AddMinutes(10),
+#endif
                 Issuer = configuration["JwtBearerTokenSettings:Issuer"],
                 Audience = configuration["JwtBearerTokenSettings:Audience"],
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration["JwtBearerTokenSettings:SecretKey"]!)), SecurityAlgorithms.HmacSha256Signature)//simulate key
