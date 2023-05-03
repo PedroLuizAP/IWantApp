@@ -12,20 +12,27 @@ namespace IWantApp.Endpoints.Products
 
         public static Delegate Handle = Action;
         [AllowAnonymous]
-        public static async Task<IResult> Action(int? page, int? row, string orderBy, DataContext context)
+        public static async Task<IResult> Action(DataContext context, int page = 1, int row = 10, string orderBy = "name")
         {
-            page ??= 1;
+            if (row > 10) return Results.Problem(statusCode: 400, title: "The maximum number of rows is 10.");
 
-            row ??= 10;
+            var queryBase = context.Products.AsNoTracking().Include(p => p.Category).Where(p => p.HasStock && p.Category.Active);
 
-            if (string.IsNullOrEmpty(orderBy)) orderBy = "name";
+            var queryFilter = queryBase.Skip((page - 1) * row).Take(row);
 
-            var queryBase = context.Products.Include(p => p.Category).Where(p => p.HasStock && p.Category.Active);
+            switch (orderBy.ToUpper())
+            {
+                case "NAME":
+                    queryFilter = queryFilter.OrderBy(p => p.Name);
+                    break;
 
-            var queryFilter = queryBase.Skip((page.Value - 1) * row.Value).Take(row.Value);
+                case "PRICE":
+                    queryFilter = queryFilter.OrderBy(p => p.Price);
+                    break;
 
-            if (orderBy == "name") queryFilter = queryFilter.OrderBy(p => p.Name);
-            else queryFilter = queryFilter.OrderBy(p => p.Price);
+                default:
+                    return Results.Problem(statusCode: 400, title: "Invalid order by.");
+            }
 
             var products = queryFilter.ToList();
 
