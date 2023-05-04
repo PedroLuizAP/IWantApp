@@ -118,7 +118,7 @@ app.Map("/error", (HttpContext http) =>
         }
     }
 
-    return Results.Problem(title: "An error occurred.", statusCode: 500);
+    return Results.Problem(title: "An unexpected erro occurred.", statusCode: 500);
 });
 
 app.Run();
