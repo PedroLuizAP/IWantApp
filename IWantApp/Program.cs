@@ -1,3 +1,4 @@
+using IWantApp.Domain.Users;
 using IWantApp.Endpoints.Categories;
 using IWantApp.Endpoints.Client;
 using IWantApp.Endpoints.Employees;
@@ -73,6 +74,7 @@ builder.Services.AddAuthentication(x =>
 });
 
 builder.Services.AddScoped<QueryAllUsersWithClaimName>();
+builder.Services.AddScoped<UserCreator>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
