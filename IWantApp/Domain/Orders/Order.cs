@@ -11,7 +11,6 @@ namespace IWantApp.Domain.Orders
         public string DeliveryAddress { get; private set; }
         public Order() { }
 
-        //create contructor
         public Order(string clientId, string clientName, List<Product> products, string deliveryAddress)
         {
             ClientId = clientId;
@@ -23,6 +22,7 @@ namespace IWantApp.Domain.Orders
             EditedOn = DateTime.Now;
 
             Total = 0;
+
             foreach (var product in products)
             {
                 Total += product.Price;
