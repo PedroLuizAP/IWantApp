@@ -2,6 +2,7 @@ using IWantApp.Domain.Users;
 using IWantApp.Endpoints.Categories;
 using IWantApp.Endpoints.Client;
 using IWantApp.Endpoints.Employees;
+using IWantApp.Endpoints.Orders;
 using IWantApp.Endpoints.Products;
 using IWantApp.Endpoints.Security;
 using IWantApp.Infra.Data;
@@ -95,6 +96,7 @@ app.UseHttpsRedirection();
 app.MapMethods(EmployeeGetAll.Template, EmployeeGetAll.Methods, EmployeeGetAll.Handle);
 app.MapMethods(EmployeePost.Template, EmployeePost.Methods, EmployeePost.Handle);
 
+app.MapMethods(OrderPost.Template, OrderPost.Methods, OrderPost.Handle);
 app.MapMethods(ClientPost.Template, ClientPost.Methods, ClientPost.Handle);
 app.MapMethods(ClientGet.Template, ClientGet.Methods, ClientGet.Handle);
 
