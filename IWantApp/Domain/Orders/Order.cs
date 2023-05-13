@@ -35,7 +35,8 @@ namespace IWantApp.Domain.Orders
         {
             var contract = new Contract<Order>()
                 .IsNotNull(ClientId, "Client")
-                .IsNotNull(Products, "Products");
+                .IsNotNull(DeliveryAddress, "DeliveryAddress")
+                .IsTrue(Products != null && Products.Any(), "Products");
 
             AddNotifications(contract);
         }
