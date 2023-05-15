@@ -118,8 +118,7 @@ app.Map("/error", (HttpContext http) =>
     var error = http.Features.Get<IExceptionHandlerFeature>()?.Error;
 
     if (error != null)
-    {
-        R
+    {        
         switch (error)
         {
             
