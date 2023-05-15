@@ -6,6 +6,7 @@ using IWantApp.Endpoints.Orders;
 using IWantApp.Endpoints.Products;
 using IWantApp.Endpoints.Security;
 using IWantApp.Infra.Data;
+using IWantApp.Resources;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
@@ -118,17 +119,19 @@ app.Map("/error", (HttpContext http) =>
 
     if (error != null)
     {
+        R
         switch (error)
         {
+            
             case SqlException:
-                return Results.Problem(title: "Database out", statusCode: 500);
+                return Results.Problem(title: Messages.DatabaseOut, statusCode: 500);
 
             case BadHttpRequestException:
-                return Results.Problem(title: "Invalid format", statusCode: 500);
+                return Results.Problem(title: Messages.InvalidFormat, statusCode: 500);
         }
     }
 
-    return Results.Problem(title: "An unexpected erro occurred.", statusCode: 500);
+    return Results.Problem(title: Messages.UnexpectedError, statusCode: 500);
 });
 
 app.Run();
