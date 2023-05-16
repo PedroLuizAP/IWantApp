@@ -1,4 +1,5 @@
 ﻿using IWantApp.Infra.Data;
+using IWantApp.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,7 +15,7 @@ namespace IWantApp.Endpoints.Products
         [AllowAnonymous]
         public static async Task<IResult> Action(DataContext context, int page = 1, int row = 10, string orderBy = "name")
         {
-            if (row > 10) return Results.Problem(statusCode: 400, title: "The maximum number of rows is 10.");
+            if (row > 10) return Results.Problem(statusCode: 400, title: Messages.LimitRows);
 
             var queryBase = context.Products.AsNoTracking().Include(p => p.Category).Where(p => p.HasStock && p.Category.Active);
 
@@ -31,7 +32,7 @@ namespace IWantApp.Endpoints.Products
                     break;
 
                 default:
-                    return Results.Problem(statusCode: 400, title: "Invalid order by.");
+                    return Results.Problem(statusCode: 400, title: Messages.InvalidOrder);
             }
 
             var products = queryFilter.ToList();

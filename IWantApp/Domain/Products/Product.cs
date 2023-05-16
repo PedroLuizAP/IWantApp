@@ -1,5 +1,6 @@
 ﻿using Flunt.Validations;
 using IWantApp.Domain.Orders;
+using IWantApp.Resources;
 
 namespace IWantApp.Domain.Products
 {
@@ -37,7 +38,7 @@ namespace IWantApp.Domain.Products
                 .IsNotNullOrEmpty(Name, "Name")
                 .IsGreaterOrEqualsThan(Name, 3, "Name")
                 .IsNotNullOrEmpty(Description, "Description")
-                .IsNotNull(Category, "Category", "Category not Found")
+                .IsNotNull(Category, "Category", Messages.CategoryNotFound)
                 .IsGreaterOrEqualsThan(Description, 3, "Description")
                 .IsNotNullOrEmpty(CreatedBy, "CreatedBy")
                 .IsNotNullOrEmpty(EditedBy, "EditedBy")

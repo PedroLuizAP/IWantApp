@@ -61,6 +61,15 @@ namespace IWantApp.Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Category not found.
+        /// </summary>
+        public static string CategoryNotFound {
+            get {
+                return ResourceManager.GetString("CategoryNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Database out.
         /// </summary>
         public static string DatabaseOut {
@@ -75,6 +84,24 @@ namespace IWantApp.Resources {
         public static string InvalidFormat {
             get {
                 return ResourceManager.GetString("InvalidFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Invalid order by.
+        /// </summary>
+        public static string InvalidOrder {
+            get {
+                return ResourceManager.GetString("InvalidOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Maximum limit of 10 rows.
+        /// </summary>
+        public static string LimitRows {
+            get {
+                return ResourceManager.GetString("LimitRows", resourceCulture);
             }
         }
         

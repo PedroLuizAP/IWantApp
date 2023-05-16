@@ -1,7 +1,6 @@
-﻿using Dapper;
-using IWantApp.Infra.Data;
+﻿using IWantApp.Infra.Data;
+using IWantApp.Resources;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Data.SqlClient;
 
 namespace IWantApp.Endpoints.Employees
 {
@@ -14,7 +13,7 @@ namespace IWantApp.Endpoints.Employees
         [Authorize(Policy = "Employee005Policy")]
         public static async Task<IResult> Action(int? page, int? rows, QueryAllUsersWithClaimName query)
         {
-            if (page > 10) return Results.BadRequest("Maximum limit of 10 rows.");
+            if (page > 10) return Results.BadRequest(Messages.LimitRows);
 
             return Results.Ok(await query.Execute(page, rows));
         }

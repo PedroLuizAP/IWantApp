@@ -117,11 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CategoryNotFound" xml:space="preserve">
+    <value>Category not found</value>
+  </data>
   <data name="DatabaseOut" xml:space="preserve">
     <value>Database out</value>
   </data>
   <data name="InvalidFormat" xml:space="preserve">
     <value>Invalid format</value>
+  </data>
+  <data name="InvalidOrder" xml:space="preserve">
+    <value>Invalid order by</value>
+  </data>
+  <data name="LimitRows" xml:space="preserve">
+    <value>Maximum limit of 10 rows</value>
   </data>
   <data name="UnexpectedError" xml:space="preserve">
     <value>An unexpected erro occurred.</value>
