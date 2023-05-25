@@ -6,7 +6,7 @@ namespace IWantApp.Endpoints.Client
     public class ClientGet
     {
         public static string Template => "/clients";
-        public static string[] Methods => new string[] { HttpMethod.Post.ToString() };
+        public static string[] Methods => new string[] { HttpMethod.Get.ToString() };
         public static Delegate Handle => Action;
 
         [AllowAnonymous]
